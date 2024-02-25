@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser()
 
 # server options
 parser.add_argument("--host", type=str, default='localhost')
-parser.add_argument("--port", type=int, default=43007)
+parser.add_argument("--port", type=int, default=43001)
 
 
 # options from whisper_online
@@ -38,7 +38,7 @@ else:
 #    from whisper_timestamped_model import WhisperTimestampedASR
     asr_cls = WhisperTimestampedASR
 
-asr = asr_cls(modelsize=size, lan=language, cache_dir=args.model_cache_dir, model_dir=args.model_dir)
+asr = asr_cls(modelsize=size, lan=language, cache_dir=args.model_cache_dir, model_dir="./faster-whisper-small")
 
 if args.task == "translate":
     asr.set_translate_task()
@@ -64,7 +64,7 @@ online = OnlineASRProcessor(asr,tokenizer,buffer_trimming=(args.buffer_trimming,
 
 
 
-demo_audio_path = "cs-maji-2.16k.wav"
+demo_audio_path = "./data/full_with_default_lex.wav"
 if os.path.exists(demo_audio_path):
     # load the audio into the LRU cache before we start the timer
     a = load_audio_chunk(demo_audio_path,0,1)
